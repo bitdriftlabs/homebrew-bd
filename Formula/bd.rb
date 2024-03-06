@@ -11,4 +11,8 @@ class Bd < Formula
   def install
     bin.install "bd"
   end
+
+  def pour_bottle?
+    true
+  end
 end
