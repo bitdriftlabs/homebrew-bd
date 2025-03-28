@@ -4,8 +4,8 @@
 class Bd < Formula
     desc "bitdrift CLI tool"
     homepage "https://bitdrift.io"
-    url "https://dl.bitdrift.io/bd-cli/0.1.19/bd-cli-mac-arm64.tar.gz"
-    sha256 "402724d05a557bbf56187c9afec71defd707bddc7f18b442e2ef675db5c7efbe"
+    url "https://dl.bitdrift.io/bd-cli/0.1.21/bd-cli-mac-arm64.tar.gz"
+    sha256 "ed30f4e7ea53bc7503396f0fd9797f7279b280215f637ba462d9984475879266"
     version "0.1.19"
   
     def install
