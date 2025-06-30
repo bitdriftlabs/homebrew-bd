@@ -13,3 +13,4 @@ sha256=$(curl -Ss "$sha254file")
 # Update Formula/bd.rb
 /usr/bin/sed -i '' "s|url .*|url \"$url\"|" Formula/bd.rb
 /usr/bin/sed -i '' "s|sha256 .*|sha256 \"$sha256\"|" Formula/bd.rb
+/usr/bin/sed -i '' "s|version .*|version \"$version\"|" Formula/bd.rb
