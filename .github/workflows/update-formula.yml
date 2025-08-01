@@ -1,0 +1,61 @@
+name: Update Formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release'
+        required: true
+        type: string
+      target_branch:
+        description: 'Target branch to commit changes to'
+        required: false
+        type: string
+        default: 'main'
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version to release'
+        required: true
+        type: string
+      target_branch:
+        description: 'Target branch to commit changes to'
+        required: false
+        type: string
+        default: 'main'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update Formula
+        run: |
+          chmod +x ./script/update.sh
+          ./script/update.sh ${{ github.event.inputs.version }}
+
+      - name: Setup GitHub CLI
+        uses: cli/setup-gh@v1
+
+      - name: Commit changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add Formula/bd.rb
+          git status
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            gh auth setup-git
+            gh repo set-default ${{ github.repository }}
+
+            # Check if target branch exists and is different from current
+            if [[ "${{ github.event.inputs.target_branch }}" != "main" ]]; then
+              git checkout -b ${{ github.event.inputs.target_branch }} || git checkout ${{ github.event.inputs.target_branch }}
+            fi
+
+            git commit -m "Update bd formula to version ${{ github.event.inputs.version }}"
+            git push origin ${{ github.event.inputs.target_branch }}
+          fi
