@@ -12,6 +12,17 @@ on:
         required: false
         type: string
         default: 'main'
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version to release'
+        required: true
+        type: string
+      target_branch:
+        description: 'Target branch to commit changes to'
+        required: false
+        type: string
+        default: 'main'
 
 jobs:
   update:
